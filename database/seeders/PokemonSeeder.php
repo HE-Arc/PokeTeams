@@ -7,7 +7,7 @@ use App\Models\Pokemon;
 
 class PokemonSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         Pokemon::create([
             'name' => 'Pikachu',

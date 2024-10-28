@@ -11,6 +11,10 @@ class Team extends Model
 
     protected $fillable = ['name', 'user_id'];
 
+    public static function create(array $array)
+    {
+    }
+
     public function pokemons()
     {
         return $this->belongsToMany(Pokemon::class);

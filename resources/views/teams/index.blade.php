@@ -17,6 +17,7 @@
         <tr>
             <th>Nom</th>
             <th>Pokemons</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,11 @@
                             <li>{{ $pokemon->name }}</li>
                         @endforeach
                     </ul>
+                </td>
+                <td>
+                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-warning">
+                        <i class="bi bi-pencil"></i> Edit
+                    </a>
                 </td>
             </tr>
         @endforeach
