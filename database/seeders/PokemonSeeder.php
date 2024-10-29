@@ -19,6 +19,12 @@ class PokemonSeeder extends Seeder
                     'name' => $row[0],
                     'type1_id' => Type::where('name', '=', trim($types[0], " '"))->get()->first()->id,
                     'type2_id' => count($types) > 1 ? Type::where('name', '=', trim($types[1], " '"))->get()->first()->id : null,
+                    'hp' => $row[4],
+                    'attack' => $row[5],
+                    'defense' => $row[6],
+                    'special_attack' => $row[7],
+                    'special_defense' => $row[8],
+                    'speed' => $row[9],
                 ]);
             }
             $firstLine = false;

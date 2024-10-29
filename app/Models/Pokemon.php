@@ -11,6 +11,12 @@ class Pokemon extends Model
         'name',
         'type_1_id',
         'type_2_id',
+        'hp',
+        'attack',
+        'defense',
+        'special_attack',
+        'special_defense',
+        'speed',
     ];
 
     protected $table = 'pokemons';
