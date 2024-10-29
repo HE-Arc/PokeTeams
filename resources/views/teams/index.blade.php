@@ -31,9 +31,12 @@
                         @endforeach
                     </ul>
                 </td>
-                <td>
-                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-warning">
-                        <i class="bi bi-pencil"></i> Edit
+                <td class="w-25">
+                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-info">
+                        <i class="bi bi-pencil-fill"></i> Edit
+                    </a>
+                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-danger">
+                        <i class="bi bi-trash-fill"></i> Delete
                     </a>
                 </td>
             </tr>
