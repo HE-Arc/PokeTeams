@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pokemon extends Model
 {
+    protected $fillable = [
+        'name',
+        'type_1_id',
+        'type_2_id',
+    ];
+
     protected $table = 'pokemons';
 
     public function type1(): \Illuminate\Database\Eloquent\Relations\BelongsTo
