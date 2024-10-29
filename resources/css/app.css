@@ -1,0 +1,13 @@
+.type-tag {
+    display: inline-block;
+    width: 70px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 2em;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    margin-right: 5px;
+    font-size: 12px;
+    flex-shrink: 0;
+}
