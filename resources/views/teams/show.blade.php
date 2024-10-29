@@ -1,46 +1,28 @@
 @extends("layout.app")
 
 @section("content")
-<style>
-    .type-tag {
-        display: inline-block;
-        width: 60px;
-        height: 35px;
-        line-height: 35px;
-        border-radius: 50%;
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        margin-right: 5px;
-        font-size: 12px;
-        flex-shrink: 0;
-    }
-
-    .type-wrapper {
-        display: flex;
-        gap: 5px;
-    }
-
-    .fixed-width {
-        width: 20%;
-    }
-</style>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Team List</title>
+</head>
 <body>
 <div class="container mt-5">
-    <h1>Pokemon List</h1>
+    <h1>{{ $team->name }}</h1>
+
+    <a href="{{ route('teams.index') }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i> Back to Teams</a>
+
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Name</th>
-            <th class="fixed-width">Types</th>
+            <th>Nom</th>
+            <th>Types</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($pokemons as $pokemon)
+        @foreach($team->pokemons as $pokemon)
             <tr>
-                <td>
-                    <a href="{{ route('pokemons.show', $pokemon) }}">{{ $pokemon->name }}</a>
-                </td>
+                <td>{{ $pokemon->name }}</td>
                 <td class="fixed-width">
                     <div class="type-wrapper">
                         <span class="type-tag" style="background-color: {{ $pokemon->type1->color }};">
@@ -51,7 +33,6 @@
                                 {{ $pokemon->type2->name }}
                             </span>
                         @endif
-
                     </div>
                 </td>
             </tr>
@@ -60,4 +41,5 @@
     </table>
 </div>
 </body>
+</html>
 @endsection
