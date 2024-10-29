@@ -35,7 +35,10 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th class="fixed-width" colspan="2">Base statistics</th>
+                <th class="fixed-width">Statistics</th>
+                <th class="fixed-width">Base</th>
+                <th class="fixed-width">Min</th>
+                <th class="fixed-width">Max</th>
             </tr>
             </thead>
             <tbody>
@@ -44,7 +47,13 @@
                     HP
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->hp }}
+                    {{ $pokemon->base_hp }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_hp }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_hp }}
                 </td>
             </tr>
             <tr>
@@ -52,7 +61,13 @@
                     Attack
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->attack }}
+                    {{ $pokemon->base_attack }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_attack }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_attack }}
                 </td>
             </tr>
             <tr>
@@ -60,7 +75,13 @@
                     Defense
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->defense }}
+                    {{ $pokemon->base_defense }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_defense }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_defense }}
                 </td>
             </tr>
             <tr>
@@ -68,7 +89,13 @@
                     Special attack
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->special_attack }}
+                    {{ $pokemon->base_special_attack }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_special_attack }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_special_attack }}
                 </td>
             </tr>
             <tr>
@@ -76,7 +103,13 @@
                     Special defense
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->special_defense }}
+                    {{ $pokemon->base_special_defense }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_special_defense }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_special_defense }}
                 </td>
             </tr>
             <tr>
@@ -84,7 +117,13 @@
                     Speed
                 </td>
                 <td class="fixed-width">
-                    {{ $pokemon->speed }}
+                    {{ $pokemon->base_speed }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->min_speed }}
+                </td>
+                <td class="fixed-width">
+                    {{ $pokemon->max_speed }}
                 </td>
             </tr>
             </tbody>
