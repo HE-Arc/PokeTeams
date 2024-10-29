@@ -16,4 +16,9 @@ class PokemonController extends Controller
         $pokemons = Pokemon::all();
         return view('pokemons.index', compact('pokemons'));
     }
+
+    public function show(Pokemon $pokemon): \Illuminate\Contracts\View\View
+    {
+        return view('pokemons.show', compact('pokemon'));
+    }
 }

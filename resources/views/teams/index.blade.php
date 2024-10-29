@@ -23,7 +23,7 @@
         <tbody>
         @foreach($teams as $team)
             <tr>
-                <td>{{ $team->name }}</td>
+                <td><a href="{{ route('teams.show', $team->id) }}">{{ $team->name }}</a></td>
                 <td>
                     <ul>
                         @foreach($team->pokemons as $pokemon)
@@ -35,7 +35,7 @@
                     <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i> Edit
                     </a>
-                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-danger">
+                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-danger"> <!-- TODO-->
                         <i class="bi bi-trash-fill"></i> Delete
                     </a>
                 </td>

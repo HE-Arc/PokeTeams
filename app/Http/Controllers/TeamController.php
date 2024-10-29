@@ -57,4 +57,10 @@ class TeamController extends Controller
         return redirect()->route('teams.index')
             ->with('success', 'Team updated successfully.');
     }
+
+    public function show($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    {
+        $team = Team::findOrFail($id);
+        return view('teams.show', compact('team'));
+    }
 }
