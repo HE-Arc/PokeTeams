@@ -28,6 +28,8 @@
                 <input type="text" name="name" id="teamName" class="form-control" value="{{ old('name', $team->name) }}">
             </div>
 
+            <button type="submit" class="btn btn-success">Update Team</button>
+
             <div class="form-group mt-4">
                 <h3>Select Pokemon</h3>
                 <div class="row">
@@ -45,7 +47,6 @@
             </div>
 
             <input type="hidden" name="selected_pokemons" id="selectedPokemons" value="{{ implode(',', $team->pokemons->pluck('id')->toArray()) }}">
-            <button type="submit" class="btn btn-success">Update Team</button>
         </form>
     </div>
 
@@ -58,8 +59,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const selectedPokemons = new Set(document.getElementById('selectedPokemons').value.split(',').map(Number));
 
+            let selectedPokemons = new Set();
+            let pokemonsInTeam = document.getElementById('selectedPokemons').value.split(',').map(Number);
+            if (pokemonsInTeam[0] !== 0) {
+                selectedPokemons = new Set(pokemonsInTeam);
+            }
+
+            console.log(selectedPokemons)
             document.querySelectorAll('.pokemon-card').forEach(card => {
                 const pokemonId = parseInt(card.dataset.pokemonId);
 

@@ -24,6 +24,9 @@
                 <input type="text" name="name" id="teamName" class="form-control" value="{{ old('name') }}">
             </div>
 
+
+            <button type="submit" class="btn btn-success">Create Team</button>
+
             <div class="form-group mt-4">
                 <h3>Select Pokemon</h3>
                 <div class="row">
@@ -41,7 +44,6 @@
             </div>
 
             <input type="hidden" name="selected_pokemons" id="selectedPokemons">
-            <button type="submit" class="btn btn-success">Create Team</button>
         </form>
     </div>
 

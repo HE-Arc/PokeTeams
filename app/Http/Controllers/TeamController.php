@@ -27,7 +27,9 @@ class TeamController extends Controller
         $team->user_id = 1;//auth()->id();
         $team->save();
 
-        $selectedPokemons = explode(',', $request->selected_pokemons);
+        $selectedPokemons = $request->input('selected_pokemons')
+            ? explode(',', $request->input('selected_pokemons'))
+            : [];
         $team->pokemons()->attach($selectedPokemons);
 
         return redirect()->route('teams.index')
@@ -51,7 +53,6 @@ class TeamController extends Controller
         $selectedPokemons = $request->input('selected_pokemons')
             ? explode(',', $request->input('selected_pokemons'))
             : [];
-
         $team->pokemons()->sync($selectedPokemons);
 
         return redirect()->route('teams.index')
