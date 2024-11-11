@@ -1,14 +1,10 @@
 @extends("layout.app")
 
 @section("content")
-    <!DOCTYPE html>
-<html>
-<head>
-    <title>Team List</title>
-</head>
-<body>
 <div class="container mt-5">
     <h1>{{ $team->name }}</h1>
+
+    <p><strong>Creator :</strong> {{ $team->user->name }}</p>
 
     <a href="{{ route('teams.index') }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i> Back to Teams</a>
 
@@ -40,6 +36,4 @@
         </tbody>
     </table>
 </div>
-</body>
-</html>
 @endsection

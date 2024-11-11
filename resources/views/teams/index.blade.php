@@ -1,12 +1,6 @@
 @extends("layout.app")
 
 @section("content")
-    <!DOCTYPE html>
-<html>
-<head>
-    <title>Team List</title>
-</head>
-<body>
 <div class="container mt-5">
     <h1>Team List</h1>
 
@@ -15,7 +9,8 @@
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th>Nom</th>
+            <th>Name</th>
+            <th>Creator</th>
             <th>Pokemons</th>
             <th>Actions</th>
         </tr>
@@ -24,6 +19,7 @@
         @foreach($teams as $team)
             <tr>
                 <td><a href="{{ route('teams.show', $team->id) }}">{{ $team->name }}</a></td>
+                <td>{{ $team->user->name }}</td>
                 <td>
                     <ul>
                         @foreach($team->pokemons as $pokemon)
@@ -35,15 +31,17 @@
                     <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-info">
                         <i class="bi bi-pencil-fill"></i> Edit
                     </a>
-                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-danger"> <!-- TODO-->
-                        <i class="bi bi-trash-fill"></i> Delete
-                    </a>
+                    <form action="{{ route('teams.destroy', $team->id) }}" method="POST" style="display: inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
 </div>
-</body>
-</html>
 @endsection

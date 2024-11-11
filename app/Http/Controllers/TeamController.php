@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TeamRequest;
 use App\Models\Pokemon;
 use App\Models\Team;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
@@ -24,7 +26,7 @@ class TeamController extends Controller
     {
         $team = new Team();
         $team->name = $request->name;
-        $team->user_id = 1;//auth()->id();
+        $team->user_id = auth()->id();
         $team->save();
 
         $selectedPokemons = $request->input('selected_pokemons')
@@ -36,17 +38,26 @@ class TeamController extends Controller
             ->with('success', 'Team created successfully.');
     }
 
-    public function edit($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    public function edit($id)
     {
-        $team = Team::with('pokemons')->findOrFail($id);
-        $pokemons = Pokemon::all();
+        $team = Team::findOrFail($id);
 
+        if ($team->user_id !== auth()->id()) {
+            return redirect()->route('teams.index')->with('error', 'You do not have permission to edit this team.');
+        }
+
+        $pokemons = Pokemon::all();
         return view('teams.edit', compact('team', 'pokemons'));
     }
 
     public function update(TeamRequest $request, $id): \Illuminate\Http\RedirectResponse
     {
         $team = Team::findOrFail($id);
+
+        if ($team->user_id !== auth()->id()) {
+            return redirect()->route('teams.index')->with('error', 'You do not have permission to update this team.');
+        }
+
         $team->name = $request->name;
         $team->save();
 
@@ -63,5 +74,19 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
         return view('teams.show', compact('team'));
+    }
+
+    public function destroy($id): \Illuminate\Http\RedirectResponse
+    {
+        $team = Team::findOrFail($id);
+
+        if ($team->user_id !== auth()->id()) {
+            return redirect()->route('teams.index')->with('error', 'You do not have permission to delete this team.');
+        }
+
+        $team->delete();
+
+        return redirect()->route('teams.index')
+            ->with('success', 'Team deleted successfully.');
     }
 }

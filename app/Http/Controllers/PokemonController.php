@@ -13,7 +13,7 @@ class PokemonController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
-        $pokemons = Pokemon::all();
+        $pokemons = Pokemon::paginate(20);
         return view('pokemons.index', compact('pokemons'));
     }
 

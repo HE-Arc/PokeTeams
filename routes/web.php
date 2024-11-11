@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PokemonController;
 use App\Http\Controllers\TeamController;
@@ -11,6 +12,13 @@ Route::get('/', function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [AuthController::class, 'doLogin']);
+
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'doRegister']);
+
 Route::resource('pokemons', PokemonController::class);
 
-Route::resource('teams', TeamController::class);
+Route::resource('teams', TeamController::class)->middleware('auth');
