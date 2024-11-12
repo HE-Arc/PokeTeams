@@ -3,10 +3,13 @@
 @section("content")
 
 <div class="container mt-5 w-75">
-    <h1>{{ $pokemon->name }}</h1>
-
     <a href="{{ route('pokemons.index') }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
         Back to Pokemons</a>
+
+    <h1>{{ $pokemon->name }}</h1>
+
+    <img height="300px" src="/images/pokemon_sprites/{{$pokemon->sprite}}" alt="Sprite de {{$pokemon->name}}">
+
 
     <table class="table table-bordered">
         <thead>

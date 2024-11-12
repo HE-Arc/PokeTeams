@@ -34,6 +34,7 @@ return new class extends Migration
             $table->integer('min_speed');
             $table->integer('max_speed');
             $table->integer('base_speed');
+            $table->string('sprite');
             $table->timestamps();
         });
     }

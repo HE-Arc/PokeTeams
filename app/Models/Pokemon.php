@@ -17,6 +17,7 @@ class Pokemon extends Model
         'base_special_attack',
         'base_special_defense',
         'base_speed',
+        'sprite',
     ];
 
     protected $table = 'pokemons';

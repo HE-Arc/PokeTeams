@@ -37,6 +37,7 @@ class PokemonSeeder extends Seeder
                     'base_speed' => $row[29],
                     'min_speed' => $row[30],
                     'max_speed' => $row[31],
+                    'sprite' => $row[32],
                 ]);
             }
             $firstLine = false;
