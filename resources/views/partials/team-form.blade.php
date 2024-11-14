@@ -22,7 +22,6 @@
 
 <input type="hidden" name="selected_pokemons" id="selectedPokemons">
 
-
 <style>
     .slot {
         height: 100px;

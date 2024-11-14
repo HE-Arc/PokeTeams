@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-
 namespace App\Http\Controllers;
-
-
 use App\Models\Pokemon;
+use Illuminate\Http\Client\Request;
+use Symfony\Component\Console\Input\Input;
 
 class PokemonController extends Controller
 {

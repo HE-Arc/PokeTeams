@@ -3,8 +3,9 @@
 @section("content")
 
 <div class="container mt-5 w-75">
-    <a href="{{ route('pokemons.index') }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
-        Back to Pokemons</a>
+    <a href="{{ route($_GET['backRoute']) }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
+        Back
+    </a>
 
     <h1>{{ $pokemon->name }}</h1>
 

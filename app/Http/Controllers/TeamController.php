@@ -29,9 +29,8 @@ class TeamController extends Controller
         $team->user_id = auth()->id();
         $team->save();
 
-        $selectedPokemons = $request->input('selected_pokemons')
-            ? explode(',', $request->input('selected_pokemons'))
-            : [];
+        $selectedPokemons = $this->createSelectedPokemonsArray($request);
+
         $team->pokemons()->attach($selectedPokemons);
 
         return redirect()->route('teams.index')
@@ -43,7 +42,8 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
 
         if ($team->user_id !== auth()->id()) {
-            return redirect()->route('teams.index')->with('error', 'You do not have permission to edit this team.');
+            return redirect()->route('teams.index')
+                ->with('error', 'You do not have permission to edit this team.');
         }
 
         $pokemons = Pokemon::all();
@@ -55,15 +55,14 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
 
         if ($team->user_id !== auth()->id()) {
-            return redirect()->route('teams.index')->with('error', 'You do not have permission to update this team.');
+            return redirect()->route('teams.index')
+                ->with('error', 'You do not have permission to update this team.');
         }
 
         $team->name = $request->name;
         $team->save();
 
-        $selectedPokemons = $request->input('selected_pokemons')
-            ? explode(',', $request->input('selected_pokemons'))
-            : [];
+        $selectedPokemons = $this->createSelectedPokemonsArray($request);
         $team->pokemons()->sync($selectedPokemons);
 
         return redirect()->route('teams.index')
@@ -81,12 +80,20 @@ class TeamController extends Controller
         $team = Team::findOrFail($id);
 
         if ($team->user_id !== auth()->id()) {
-            return redirect()->route('teams.index')->with('error', 'You do not have permission to delete this team.');
+            return redirect()->route('teams.index')
+                ->with('error', 'You do not have permission to delete this team.');
         }
 
         $team->delete();
 
         return redirect()->route('teams.index')
             ->with('success', 'Team deleted successfully.');
+    }
+
+    private function createSelectedPokemonsArray(TeamRequest $request): array
+    {
+        return $request->input('selected_pokemons')
+        ? explode(',', $request->input('selected_pokemons'))
+        : [];
     }
 }

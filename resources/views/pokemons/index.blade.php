@@ -20,7 +20,14 @@
             @foreach($pokemons as $pokemon)
                 <tr>
                     <td>
-                        <a href="{{ route('pokemons.show', $pokemon) }}">{{ $pokemon->name }}</a>
+                        <a href="{{ route('pokemons.show', [
+                                                        'pokemon' => $pokemon,
+                                                        'backRoute' => 'pokemons.index'
+                                                        ]
+                                                    )
+                                                }}">
+                            {{ $pokemon->name }}
+                        </a>
                     </td>
                     <td class="w-25">
                         <div class="type-wrapper">

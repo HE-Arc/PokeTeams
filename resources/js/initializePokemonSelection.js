@@ -2,57 +2,60 @@ export function initializePokemonSelection(slotSelector, pokemonCardSelector, mo
     const selectedPokemons = {};
     let currentSlotId = null;
 
-    document.querySelectorAll(slotSelector).forEach(slot => {
-        slot.addEventListener('click', function () {
-            currentSlotId = this.dataset.slotId;
+    function updateSlotDisplay(slotId, pokemonName) {
+        document.getElementById(`slot-${slotId}`).textContent = pokemonName || "Empty";
+    }
 
-            document.querySelectorAll(pokemonCardSelector).forEach(card => {
-                card.classList.remove('selected-green', 'selected-blue');
+    function updateHiddenInput() {
+        document.querySelector(hiddenInputSelector).value = Object.values(selectedPokemons).join(',');
+    }
 
-                if (Object.values(selectedPokemons).includes(card.dataset.pokemonId)) {
-                    card.classList.add('selected-blue');
-                }
+    function updateCardVisuals() {
+        document.querySelectorAll(pokemonCardSelector).forEach(card => {
+            card.classList.remove('selected-green', 'selected-blue');
 
-                if (selectedPokemons[currentSlotId] === card.dataset.pokemonId) {
-                    card.classList.remove('selected-blue');
-                    card.classList.add('selected-green');
-                }
-            });
-
-            $(modalSelector).modal('show');
+            if (Object.values(selectedPokemons).includes(card.dataset.pokemonId)) {
+                card.classList.add('selected-blue');
+            }
+            if (selectedPokemons[currentSlotId] === card.dataset.pokemonId) {
+                card.classList.remove('selected-blue');
+                card.classList.add('selected-green');
+            }
         });
+    }
+
+    function handleSlotClick(event) {
+        currentSlotId = event.currentTarget.dataset.slotId;
+        updateCardVisuals();
+        $(modalSelector).modal('show');
+    }
+
+    function handleCardClick(event) {
+        const card = event.currentTarget;
+        const pokemonId = card.dataset.pokemonId;
+        const pokemonName = card.dataset.pokemonName;
+
+        if (selectedPokemons[currentSlotId] === pokemonId) {
+            delete selectedPokemons[currentSlotId];
+            updateSlotDisplay(currentSlotId);
+        } else if (!Object.values(selectedPokemons).includes(pokemonId)) {
+            selectedPokemons[currentSlotId] = pokemonId;
+            updateSlotDisplay(currentSlotId, pokemonName);
+        } else {
+            alert("This Pokemon is already selected in another slot.");
+            return;
+        }
+
+        updateHiddenInput();
+        updateCardVisuals();
+        $(modalSelector).modal('hide');
+    }
+
+    document.querySelectorAll(slotSelector).forEach(slot => {
+        slot.addEventListener('click', handleSlotClick);
     });
 
     document.querySelectorAll(pokemonCardSelector).forEach(card => {
-        card.addEventListener('click', function () {
-            const pokemonId = this.dataset.pokemonId;
-            const pokemonName = this.dataset.pokemonName;
-
-            if (selectedPokemons[currentSlotId] === pokemonId) {
-                delete selectedPokemons[currentSlotId];
-                document.getElementById(`slot-${currentSlotId}`).textContent = "Empty";
-                document.querySelector(hiddenInputSelector).value = Object.values(selectedPokemons).join(',');
-
-                this.classList.remove('selected-green');
-            } else if (!Object.values(selectedPokemons).includes(pokemonId)) {
-                document.getElementById(`slot-${currentSlotId}`).textContent = pokemonName;
-                selectedPokemons[currentSlotId] = pokemonId;
-                document.querySelector(hiddenInputSelector).value = Object.values(selectedPokemons).join(',');
-
-                document.querySelectorAll(pokemonCardSelector).forEach(card => {
-                    card.classList.remove('selected-green', 'selected-blue');
-                    if (Object.values(selectedPokemons).includes(card.dataset.pokemonId)) {
-                        card.classList.add('selected-blue');
-                    }
-                    if (selectedPokemons[currentSlotId] === card.dataset.pokemonId) {
-                        card.classList.add('selected-green');
-                    }
-                });
-            } else {
-                alert("This Pokemon is already selected in another slot.");
-            }
-
-            $(modalSelector).modal('hide');
-        });
+        card.addEventListener('click', handleCardClick);
     });
 }
