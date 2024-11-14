@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Http\Filter\QueryFilter;
 
 class Pokemon extends Model
 {
@@ -18,6 +20,12 @@ class Pokemon extends Model
         'base_special_defense',
         'base_speed',
         'sprite',
+    ];
+
+    protected $filters = [
+        'name',
+        'type_1_id',
+        'type_2_id',
     ];
 
     protected $table = 'pokemons';
