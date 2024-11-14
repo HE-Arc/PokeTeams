@@ -29,16 +29,7 @@
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                 </div>
 
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <strong>Whoops! There were some problems with your input.</strong>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                @include("partials.errors-form")
 
                 <button class="btn btn-primary mt-2">Register</button>
             </form>

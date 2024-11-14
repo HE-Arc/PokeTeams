@@ -8,7 +8,10 @@
                 <div class="row">
                     @foreach($pokemons as $pokemon)
                         <div class="col-3 mb-3">
-                            <div class="pokemon-card border p-2 text-center" data-pokemon-id="{{ $pokemon->id }}" data-pokemon-name="{{ $pokemon->name }}" style="cursor: pointer;">
+                            <div class="pokemon-card border p-2 text-center"
+                                 data-pokemon-id="{{ $pokemon->id }}"
+                                 data-pokemon-name="{{ $pokemon->name }}"
+                                 style="cursor: pointer;">
                                 {{ $pokemon->name }}
                             </div>
                         </div>
@@ -32,38 +35,3 @@
         color: white;
     }
 </style>
-
-<script>
-    document.querySelectorAll('.pokemon-card').forEach(card => {
-        card.addEventListener('click', function () {
-            const pokemonId = this.dataset.pokemonId;
-            const pokemonName = this.dataset.pokemonName;
-
-            if (selectedPokemons[currentSlotId] === pokemonId) {
-                delete selectedPokemons[currentSlotId];
-                document.getElementById(`slot-${currentSlotId}`).textContent = "Empty";
-                document.getElementById('selectedPokemons').value = Object.values(selectedPokemons).join(',');
-
-                this.classList.remove('selected-green');
-            } else if (!Object.values(selectedPokemons).includes(pokemonId)) {
-                document.getElementById(`slot-${currentSlotId}`).textContent = pokemonName;
-                selectedPokemons[currentSlotId] = pokemonId;
-                document.getElementById('selectedPokemons').value = Object.values(selectedPokemons).join(',');
-
-                document.querySelectorAll('.pokemon-card').forEach(card => {
-                    card.classList.remove('selected-green', 'selected-blue');
-                    if (Object.values(selectedPokemons).includes(card.dataset.pokemonId)) {
-                        card.classList.add('selected-blue');
-                    }
-                    if (selectedPokemons[currentSlotId] === card.dataset.pokemonId) {
-                        card.classList.add('selected-green');
-                    }
-                });
-            } else {
-                alert("Ce Pokémon est déjà sélectionné dans un autre slot.");
-            }
-
-            $('#pokemonModal').modal('hide');
-        });
-    });
-</script>
