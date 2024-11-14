@@ -92,8 +92,8 @@ class TeamController extends Controller
 
     private function createSelectedPokemonsArray(TeamRequest $request): array
     {
-        return $request->input('selected_pokemons')
-        ? explode(',', $request->input('selected_pokemons'))
-        : [];
+        $selectedPokemons = $request->input('selected_pokemons', '');
+        return !empty($selectedPokemons) ? explode(',', $selectedPokemons) : [];
     }
+
 }

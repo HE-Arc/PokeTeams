@@ -3,8 +3,8 @@
     <div class="row">
         @for ($i = 1; $i <= 3; $i++)
             <div class="col-4 mb-3">
-                <div class="slot border p-2 text-center" data-slot-id="{{ $i }}" style="cursor: pointer;">
-                    <span id="slot-{{ $i }}">Empty</span>
+                <div class="slot border p-2 text-center" data-slot-id="{{ $i }}">
+                    <span id="slot-{{ $i }}"></span>
                 </div>
             </div>
         @endfor
@@ -12,8 +12,8 @@
     <div class="row">
         @for ($i = 4; $i <= 6; $i++)
             <div class="col-4 mb-3">
-                <div class="slot border p-2 text-center" data-slot-id="{{ $i }}" style="cursor: pointer;">
-                    <span id="slot-{{ $i }}">Empty</span>
+                <div class="slot border p-2 text-center" data-slot-id="{{ $i }}">
+                    <span id="slot-{{ $i }}"></span>
                 </div>
             </div>
         @endfor
@@ -24,9 +24,14 @@
 
 <style>
     .slot {
-        height: 100px;
+        height: 260px;
+        cursor: pointer;
         background-color: #f0f0f0;
         line-height: 70px;
         font-size: 1.2em;
+    }
+
+    .slot:hover {
+        background-color: #d4f3e8;
     }
 </style>

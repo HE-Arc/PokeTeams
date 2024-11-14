@@ -4,10 +4,11 @@ import { initializePokemonSelection } from './initializePokemonSelection.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname === '/teams/create') {
-        initializePokemonSelection('.slot', '.pokemon-card', '#pokemonModal', '#selectedPokemons');
+        initializePokemonSelection('.slot', '.add-pokemon-btn', '#pokemonModal', '#selectedPokemons');
+
     }
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    initializePokemonSelection('.slot', '.pokemon-card', '#pokemonModal', '#selectedPokemons');
+    initializePokemonSelection('.slot', '.add-pokemon-btn', '#pokemonModal', '#selectedPokemons');
 });

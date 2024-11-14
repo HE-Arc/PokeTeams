@@ -14,7 +14,13 @@
             <div class="card m-1">
                 <img class="card-img-top" src="/images/pokemon_sprites/{{$pokemon->sprite}}" alt="Sprite of {{$pokemon->name}}" style="object-fit: contain; aspect-ratio: 1/1" height="350px">
                 <div class="card-body">
-                    <h5 class="card-title">{{ $pokemon->name }}</h5>
+                    <a href="{{ route('pokemons.show', [
+                                        'pokemon' => $pokemon,
+                                        'backRoute' => ['teams.show', $team->id]
+                                        ])
+                                    }}">
+                        <h5 class="card-title">{{ $pokemon->name }}</h5>
+                    </a>
                     <div class="type-wrapper">
                         <span class="type-tag" style="background-color: {{ $pokemon->type1->color }};">
                             {{ strtoupper($pokemon->type1->name) }}

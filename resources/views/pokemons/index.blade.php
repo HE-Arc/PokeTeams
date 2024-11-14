@@ -23,9 +23,8 @@
                         <a href="{{ route('pokemons.show', [
                                                         'pokemon' => $pokemon,
                                                         'backRoute' => 'pokemons.index'
-                                                        ]
-                                                    )
-                                                }}">
+                                                        ])
+                                                    }}">
                             {{ $pokemon->name }}
                         </a>
                     </td>

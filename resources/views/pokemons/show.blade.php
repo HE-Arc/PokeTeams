@@ -2,10 +2,31 @@
 
 @section("content")
 
+<?php
+    function generateBackRoute(): ?string
+    {
+        $backRoute = null;
+        if (isset($_GET['backRoute'])) {
+            if (is_array($_GET['backRoute'])) {
+                $routeName = $_GET['backRoute'][0];
+                $idOfRoute = $_GET['backRoute'][1];
+                $backRoute = route($routeName, $idOfRoute);
+            } else {
+                $backRoute = route($_GET['backRoute']);
+            }
+        }
+        return $backRoute;
+    }
+
+    $backRoute = generateBackRoute();
+?>
+
 <div class="container mt-5 w-75">
-    <a href="{{ route($_GET['backRoute']) }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
-        Back
-    </a>
+    @if(isset($backRoute))
+        <a href="{{ generateBackRoute() }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
+            Back
+        </a>
+    @endif
 
     <h1>{{ $pokemon->name }}</h1>
 
