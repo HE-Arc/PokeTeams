@@ -35,14 +35,19 @@ class PokemonController extends Controller
             }
         } else {
             if (isset($request->type1filter) && !empty($request->type1filter)) {
-                $query->where('type1_id', $request->type1filter)
-                    ->orWhere('type2_id', $request->type1filter);
+                $query->where(function ($q) use ($request) {
+                    $q->where('type1_id', $request->type1filter)
+                        ->orWhere('type2_id', $request->type1filter);
+                });
             }
             if (isset($request->type2filter) && !empty($request->type2filter)) {
                 if ($request->type2filter == "None") {
                     $query->where('type2_id', null);
                 } else {
-                    $query->where('type2_id', $request->type2filter);
+                    $query->where(function ($q) use ($request) {
+                        $q->where('type2_id', $request->type2filter)
+                            ->orWhere('type1_id', $request->type2filter);
+                    });
                 }
             }
         }
