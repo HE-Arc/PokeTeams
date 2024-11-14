@@ -9,7 +9,7 @@
 
     <h1>{{ $pokemon->name }}</h1>
 
-    <img height="300px" src="/images/pokemon_sprites/{{$pokemon->sprite}}" alt="Sprite de {{$pokemon->name}}">
+    <img height="300px" style="aspect-ratio: 1/1; object-fit: contain" src="/images/pokemon_sprites/{{$pokemon->sprite}}" alt="Sprite of {{$pokemon->name}}">
 
 
     <table class="table table-bordered">
