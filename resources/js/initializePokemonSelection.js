@@ -26,7 +26,7 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
 
     function updateCardVisuals() {
         document.querySelectorAll('.pokemon-card').forEach(card => {
-            card.classList.remove('selected-green', 'selected-blue');
+            card.classList.remove('selected-green', 'selected-yellow');
             const pokemonId = card.querySelector('.add-pokemon-btn').dataset.pokemonId;
             const addButton = card.querySelector('.add-pokemon-btn');
 
@@ -48,7 +48,7 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
     }
 
     function updateCardIfSelectedOnAnotherSlot(card, addButton) {
-        card.classList.add('selected-blue');
+        card.classList.add('selected-yellow');
         addButton.classList.remove('btn-danger');
         addButton.classList.add('btn-success');
         addButton.innerHTML = '<i class="bi bi-plus"></i>';

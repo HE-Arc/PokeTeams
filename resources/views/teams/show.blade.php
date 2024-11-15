@@ -16,7 +16,8 @@
                 <div class="card-body">
                     <a href="{{ route('pokemons.show', [
                                         'pokemon' => $pokemon,
-                                        'backRoute' => ['teams.show', $team->id]
+                                        'backRoute' => 'teams.show',
+                                        'team_id' => $team->id
                                         ])
                                     }}">
                         <h5 class="card-title">{{ $pokemon->name }}</h5>

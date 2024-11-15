@@ -12,41 +12,41 @@ class PokemonController extends Controller
     {
         $query = Pokemon::query();
 
-        if (isset($request->namefilter) && !empty($request->namefilter)) {
-            $query->where('name', 'LIKE', '%' . $request->namefilter . '%');
+        if (!empty($request->name)) {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
         }
 
-        if (isset($request->type1filter) && !empty($request->type1filter) && isset($request->type2filter) && !empty($request->type2filter)) {
-            if ($request->type2filter == "None") {
+        if (!empty($request->type1) && !empty($request->type2)) {
+            if ($request->type2 == "None") {
                 $query->where(function ($q) use ($request) {
-                    $q->where('type1_id', $request->type1filter)
+                    $q->where('type1_id', $request->type1)
                         ->whereNull('type2_id');
                 });
             } else {
                 $query->where(function ($q) use ($request) {
                     $q->where(function ($q2) use ($request) {
-                        $q2->where('type1_id', $request->type1filter)
-                            ->where('type2_id', $request->type2filter);
+                        $q2->where('type1_id', $request->type1)
+                            ->where('type2_id', $request->type2);
                     })->orWhere(function ($q2) use ($request) {
-                        $q2->where('type1_id', $request->type2filter)
-                            ->where('type2_id', $request->type1filter);
+                        $q2->where('type1_id', $request->type2)
+                            ->where('type2_id', $request->type1);
                     });
                 });
             }
         } else {
-            if (isset($request->type1filter) && !empty($request->type1filter)) {
+            if (!empty($request->type1filter)) {
                 $query->where(function ($q) use ($request) {
-                    $q->where('type1_id', $request->type1filter)
-                        ->orWhere('type2_id', $request->type1filter);
+                    $q->where('type1_id', $request->type1)
+                        ->orWhere('type2_id', $request->type1);
                 });
             }
-            if (isset($request->type2filter) && !empty($request->type2filter)) {
-                if ($request->type2filter == "None") {
+            if (!empty($request->type2)) {
+                if ($request->type2 == "None") {
                     $query->where('type2_id', null);
                 } else {
                     $query->where(function ($q) use ($request) {
-                        $q->where('type2_id', $request->type2filter)
-                            ->orWhere('type1_id', $request->type2filter);
+                        $q->where('type2_id', $request->type2)
+                            ->orWhere('type1_id', $request->type2);
                     });
                 }
             }

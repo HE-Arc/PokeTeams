@@ -3,27 +3,59 @@
 @section("content")
 
 <?php
-    function generateBackRoute(): ?string
+    class BackRouteGenerator
     {
-        $backRoute = null;
-        if (isset($_GET['backRoute'])) {
-            if (is_array($_GET['backRoute'])) {
-                $routeName = $_GET['backRoute'][0];
-                $idOfRoute = $_GET['backRoute'][1];
-                $backRoute = route($routeName, $idOfRoute);
-            } else {
-                $backRoute = route($_GET['backRoute']);
+        private ?string $backRoute = null;
+        private array $linkValues = [];
+
+        public function generateBackRoute(): ?string
+        {
+            $this->addVariablesToBackRoute();
+            $this->addParametersVariableToBackRoute();
+
+            if (!empty($this->linkValues)) {
+                $this->backRoute = route($this->getBackRoute(), $this->getParameters());
+            }
+
+            return $this->backRoute;
+        }
+
+        private function addVariablesToBackRoute(): void
+        {
+            foreach ($_GET as $key => $value) {
+                if ($key != 'params') {
+                    $this->linkValues[] = $value;
+                }
             }
         }
-        return $backRoute;
+
+        private function addParametersVariableToBackRoute(): void
+        {
+            if (isset($_GET['params'])) {
+                foreach ($_GET['params'] as $key => $value) {
+                    $this->linkValues[$key] = $value;
+                }
+            }
+        }
+
+        private function getParameters(): array
+        {
+            return array_slice($this->linkValues, 1);
+        }
+
+        private function getBackRoute(): ?string
+        {
+            return $this->linkValues[0] ?? null;
+        }
     }
 
-    $backRoute = generateBackRoute();
+    $backRouteGenerator = new BackRouteGenerator();
+    $backRoute = $backRouteGenerator->generateBackRoute();
 ?>
 
 <div class="container mt-5 w-75">
     @if(isset($backRoute))
-        <a href="{{ generateBackRoute() }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
+        <a href="{{ $backRoute }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i>
             Back
         </a>
     @endif

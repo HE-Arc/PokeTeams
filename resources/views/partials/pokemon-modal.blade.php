@@ -17,7 +17,7 @@
                                         data-bs-dismiss="modal">
                                     <i class="bi bi-plus"></i>
                                 </button>
-                                <a href="{{ route('pokemons.show', $pokemon) }}" target="_blank" class="btn btn-secondary">
+                                <a href="{{ route('pokemons.show', $pokemon) }}" target="_blank" class="btn btn-info">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </div>
@@ -33,16 +33,12 @@
     .pokemon-card {
         cursor: default;
     }
-    .pokemon-card.selected-blue {
-        background-color: #007bff;
-        color: white;
+    .pokemon-card.selected-yellow {
+        background-color: #f3dd81;
+        color: black;
     }
     .pokemon-card.selected-green {
         background-color: #28a745;
-        color: white;
-    }
-    .btn-remove {
-        background-color: #dc3545;
         color: white;
     }
 </style>
