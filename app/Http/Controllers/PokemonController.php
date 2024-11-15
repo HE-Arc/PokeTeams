@@ -12,11 +12,11 @@ class PokemonController extends Controller
     {
         $query = Pokemon::query();
 
-        if (!empty($request->name)) {
+        if (isset($request->name) && !empty($request->name)) {
             $query->where('name', 'LIKE', '%' . $request->name . '%');
         }
 
-        if (!empty($request->type1) && !empty($request->type2)) {
+        if (isset($request->type1) && !empty($request->type1) && isset($request->type2) && !empty($request->type2)) {
             if ($request->type2 == "None") {
                 $query->where(function ($q) use ($request) {
                     $q->where('type1_id', $request->type1)
@@ -34,13 +34,13 @@ class PokemonController extends Controller
                 });
             }
         } else {
-            if (!empty($request->type1filter)) {
+            if (isset($request->type1) && !empty($request->type1)) {
                 $query->where(function ($q) use ($request) {
                     $q->where('type1_id', $request->type1)
                         ->orWhere('type2_id', $request->type1);
                 });
             }
-            if (!empty($request->type2)) {
+            if (isset($request->type2) && !empty($request->type2)) {
                 if ($request->type2 == "None") {
                     $query->where('type2_id', null);
                 } else {
