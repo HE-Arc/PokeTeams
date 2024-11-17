@@ -2,6 +2,40 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
     const selectedPokemons = {};
     let currentSlotId = null;
 
+    function getUrlParams() {
+        return new URLSearchParams(window.location.search);
+    }
+
+    function updateUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+
+        Object.keys(selectedPokemons).forEach(slotId => {
+            params.set(`pokemon_${slotId}`, selectedPokemons[slotId]);
+        });
+
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+    }
+
+    function loadSelectedPokemonsFromUrl() {
+        const params = getUrlParams();
+        const pairs = params.toString().split("&");
+
+        Object.keys(selectedPokemons).forEach(key => delete selectedPokemons[key]);
+
+        pairs.forEach(pair => {
+            if (pair.includes("=")) {
+                const [key, value] = pair.split("=");
+                if (key.startsWith("pokemon_") && value !== "undefined" && value !== "") {
+                    const index = parseInt(key.split("_")[1], 10);
+                    if (index >= 1 && index <= 6 && !selectedPokemons[index]) {
+                        selectedPokemons[index] = String(value);
+                    }
+                }
+            }
+        });
+        updateHiddenInput();
+    }
+
     function updateSlotDisplay(slotId, pokemonName, pokemonSprite) {
         const slotElement = document.getElementById(`slot-${slotId}`);
         if (pokemonName) {
@@ -23,7 +57,6 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
         hiddenInput.value = Object.values(selectedPokemons).join(',');
     }
 
-
     function updateCardVisuals() {
         document.querySelectorAll('.pokemon-card').forEach(card => {
             card.classList.remove('selected-green', 'selected-yellow');
@@ -32,7 +65,7 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
 
             if (selectedPokemons[currentSlotId] === pokemonId) {
                 updateCardIfSelected(card, addButton);
-            } else if (Object.values(selectedPokemons).includes(pokemonId)) {
+            } else if (Object.values(selectedPokemons).some(id => id === pokemonId)) {
                 updateCardIfSelectedOnAnotherSlot(card, addButton);
             } else {
                 updateCardIfNotSelected(card, addButton);
@@ -75,7 +108,7 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
         if (selectedPokemons[currentSlotId] === pokemonId) {
             delete selectedPokemons[currentSlotId];
             updateSlotDisplay(currentSlotId);
-        } else if (!Object.values(selectedPokemons).includes(pokemonId)) {
+        } else if (!Object.values(selectedPokemons).some(id => id === pokemonId)) {
             selectedPokemons[currentSlotId] = pokemonId;
             updateSlotDisplay(currentSlotId, pokemonName, pokemonSprite);
         } else {
@@ -85,8 +118,8 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
 
         updateHiddenInput();
         updateCardVisuals();
+        updateUrlParams();
     }
-
 
     document.querySelectorAll(slotSelector).forEach(slot => {
         slot.addEventListener('click', handleSlotClick);
@@ -95,4 +128,6 @@ export function initializePokemonSelection(slotSelector, addPokemonBtnSelector, 
     document.querySelectorAll(addPokemonBtnSelector).forEach(button => {
         button.addEventListener('click', handleAddButtonClick);
     });
+
+    loadSelectedPokemonsFromUrl();
 }

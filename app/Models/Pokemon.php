@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Filter\QueryFilter;
 
 class Pokemon extends Model
 {
@@ -43,6 +42,11 @@ class Pokemon extends Model
     public function teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Team::class);
+    }
+
+    public static function getPokemonById($id)
+    {
+        return self::find($id);
     }
 }
 

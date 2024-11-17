@@ -13,8 +13,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('home') }}">PokeTeams</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,14 +32,14 @@
                 </ul>
                 <div class="navbar-nav ms-auto d-flex align-items-center">
                     @auth
-                        <span class="navbar-text text-white d-none d-lg-block me-3">{{ \Illuminate\Support\Facades\Auth::user()->name }}</span>
+                        <span class="navbar-text text-white d-none d-lg-block me-3">{{ auth()->user()->name }}</span>
                         <form class="d-inline d-none d-lg-block" action="{{ route('logout') }}" method="post">
                             @method("delete")
                             @csrf
                             <button class="btn btn-outline-danger btn-sm">Logout</button>
                         </form>
                         <div class="d-lg-none navbar-text text-white me-3">
-                            {{ \Illuminate\Support\Facades\Auth::user()->name }}
+                            {{ auth()->user()->name }}
                         </div>
                         <form class="d-inline d-lg-none" action="{{ route('logout') }}" method="post">
                             @method("delete")
@@ -71,7 +72,7 @@
     @yield('content')
 </div>
 
-    <footer class="bg-dark text-white text-center text-lg-start mt-5 py-3">
+    <footer class="bg-dark text-white text-center text-lg-start mt-5 py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">
@@ -84,7 +85,6 @@
         </div>
     </footer>
 </body>
-
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

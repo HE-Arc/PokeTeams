@@ -9,7 +9,7 @@
         <a href="{{ route('teams.index') }}" class="btn btn-primary mb-3"><i class="bi bi-arrow-return-left"></i> Back
             to Teams</a>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             @foreach($team->pokemons as $pokemon)
                 <div class="col">
                     <div class="card h-100 py-3">

@@ -28,24 +28,27 @@
                                 </div>
 
                                 <div class="col-md-8 d-flex justify-content-start align-items-center p-3">
-                                    @if($team->pokemons->isEmpty())
-                                        <p class="text-muted mb-0">No Pokémon in this team.</p>
-                                    @else
-                                        <div class="d-flex flex-wrap gap-3">
-                                            @foreach($team->pokemons as $pokemon)
-                                                <img src="/images/pokemon_sprites/{{$pokemon->sprite}}"
-                                                     alt="Sprite of {{ $pokemon->name }}"
-                                                     style="width: 100px; height: 100px; object-fit: contain;">
-                                            @endforeach
-                                        </div>
-                                    @endif
+                                    <div class="d-flex flex-wrap gap-3">
+                                        @foreach($team->pokemons as $pokemon)
+                                            <img src="/images/pokemon_sprites/{{$pokemon->sprite}}"
+                                                 alt="Sprite of {{ $pokemon->name }}"
+                                                 style="width: 100px; height: 100px; object-fit: contain;">
+                                        @endforeach
+                                    </div>
                                 </div>
+
+                                @php
+                                    $queryParams = ['team' => $team->id];
+                                    foreach ($team->pokemons as $index => $pokemon) {
+                                        $queryParams["pokemon_" . ($index + 1)] = $pokemon->id;
+                                    }
+                                @endphp
 
                                 <div class="col-md-1 d-flex flex-column justify-content-center align-items-center gap-2 p-3">
                                     <a href="{{ route('teams.show', $team->id) }}" class="btn btn-info btn-icon btn-actions">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a href="{{ route('teams.edit', $team->id) }}" class="btn btn-warning btn-icon btn-actions">
+                                    <a href="{{ route('teams.edit', $queryParams) }}" class="btn btn-warning btn-icon btn-actions">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                     <form action="{{ route('teams.destroy', $team->id) }}" method="POST">
