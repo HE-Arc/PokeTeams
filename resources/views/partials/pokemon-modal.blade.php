@@ -17,7 +17,7 @@
                                         data-bs-dismiss="modal">
                                     <i class="bi bi-plus"></i>
                                 </button>
-                                <a href="{{ route('pokemons.show', $pokemon) }}" target="_blank" class="btn btn-info">
+                                <a href="{{ route('pokemons.show', [$pokemon, 'noBack']) }}" target="_blank" class="btn btn-info">
                                     <i class="bi bi-eye"></i>
                                 </a>
                             </div>

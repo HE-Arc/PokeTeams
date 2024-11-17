@@ -55,7 +55,7 @@
         </div>
     </nav>
 
-<div class="container mt-3 flex-grow-1">
+<div class="container mt-2 flex-grow-1">
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -71,7 +71,7 @@
     @yield('content')
 </div>
 
-    <footer class="bg-dark text-white text-center text-lg-start mt-4 py-3">
+    <footer class="bg-dark text-white text-center text-lg-start mt-5 py-3">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 mb-3 mb-md-0">

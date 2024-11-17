@@ -1,20 +1,13 @@
 @extends("layout.app")
 
 @section("content")
-    <style>
-        .type-wrapper {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-    </style>
     <div class="container mt-5">
         <h1>Pokemon List</h1>
 
         <form action="{{ route('pokemons.index') }}" method="get" class="d-flex align-items-center gap-3 mt-3 mb-3" style="flex-wrap: nowrap;">
             <div class="form-group d-flex align-items-center me-2">
                 <label class="form-label me-2 whitespace-nowrap" for="name">Name</label>
-                <input type="text" class="form-control" id="name" name="name" value="<?php echo isset($_GET['name']) ? htmlspecialchars($_GET['name']) : ''; ?>">
+                <input type="text" class="form-control" id="name" name="name" value="{{ request('name') }}">
             </div>
 
             <div class="form-group d-flex align-items-center me-2">
@@ -22,7 +15,8 @@
                 <select class="form-select" id="type1" name="type1">
                     <option value="">Any</option>
                     @foreach($types as $type)
-                        <option <?php if (isset($_GET['type1']) and $type->id == $_GET['type1']) echo "selected" ?> value="{{$type->id}}" style="background-color: {{ $type->color }};">
+                        <option class="type-option" value="{{$type->id}}" style="background-color: {{ $type->color }};"
+                            {{ request('type1') == $type->id ? 'selected' : '' }}>
                             {{ strtoupper($type->name) }}
                         </option>
                     @endforeach
@@ -33,9 +27,10 @@
                 <label class="form-label me-2 whitespace-nowrap" for="type2">Type&nbsp;2</label>
                 <select class="form-select" id="type2" name="type2">
                     <option value="">Any</option>
-                    <option <?php if (isset($_GET['type2']) and "None" == $_GET['type2']) echo "selected" ?> value="None">None</option>
+                    <option value="None" {{ request('type2') == 'None' ? 'selected' : '' }}>None</option>
                     @foreach($types as $type)
-                        <option <?php if (isset($_GET['type2']) and $type->id == $_GET['type2']) echo "selected" ?> value="{{$type->id}}" style="background-color: {{ $type->color }};">
+                        <option class="type-option" value="{{$type->id}}" style="background-color: {{ $type->color }};"
+                            {{ request('type2') == $type->id ? 'selected' : '' }}>
                             {{ strtoupper($type->name) }}
                         </option>
                     @endforeach
@@ -48,53 +43,43 @@
         </form>
 
         @if($pokemons->isEmpty())
-            <br><p>No pokemon matches with the selected filters.</p>
+            <p class="mt-4">No Pokémon matches the selected filters.</p>
         @else
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Sprite</th>
-                    <th>Name</th>
-                    <th>Types</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
                 @foreach($pokemons as $pokemon)
-                    <tr>
-                        <td style="width:80px">
-                            <img height="80px" style="aspect-ratio: 1/1; object-fit: contain" src="/images/pokemon_sprites/{{$pokemon->sprite}}" alt="Sprite of {{$pokemon->name}}">
-                        </td>
-                        <td>
-                            <a href="{{ route('pokemons.show', array_filter([
-                                                            'pokemon' => $pokemon,
-                                                            'backRoute' => 'pokemons.index',
-                                                            'params' => $_GET
-                                                            ])
-                                                        )}}">
-                                {{ $pokemon->name }}
-                            </a>
-
-
-
-                        </td>
-                        <td style="width:70px">
-                            <div class="type-wrapper">
-                            <span class="type-tag" style="background-color: {{ $pokemon->type1->color }};">
-                                {{ strtoupper($pokemon->type1->name) }}
-                            </span>
-                                @if ($pokemon->type2)
-                                    <span class="type-tag" style="background-color: {{ $pokemon->type2->color }};">
-                                    {{ strtoupper($pokemon->type2->name) }}
-                                </span>
-                                @endif
+                    <div class="col">
+                        <div class="card h-100 py-3">
+                            <img src="/images/pokemon_sprites/{{ $pokemon->sprite }}" class="card-img-top"
+                                 alt="Sprite of {{ $pokemon->name }}" style="aspect-ratio: 1/1; height: 175px; object-fit: contain;">
+                            <div class="card-body text-center">
+                                <h4 class="card-title">{{ $pokemon->name }}</h4>
+                                <hr>
+                                <div class="type-wrapper">
+                                    <span class="card-type" style="background-color: {{ $pokemon->type1->color }};">
+                                        {{ strtoupper($pokemon->type1->name) }}
+                                    </span>
+                                    @if ($pokemon->type2)
+                                        <span class="card-type" style="background-color: {{ $pokemon->type2->color }};">
+                                            {{ strtoupper($pokemon->type2->name) }}
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
-                        </td>
-                    </tr>
+                            <div class="d-flex justify-content-center gap-2">
+                                <a href="{{ route('pokemons.show', $pokemon) }}" class="btn btn-info btn-actions">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <a href="{{ route('teams.add-pokemon', $pokemon) }}" class="btn btn-success btn-actions">
+                                    <i class="bi bi-plus-square-fill"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 @endforeach
-                </tbody>
-            </table>
+            </div>
         @endif
-        <div class="d-flex justify-content-center">
+
+        <div class="d-flex justify-content-center mt-4">
             {{ $pokemons->appends(request()->input())->links('pagination::bootstrap-5') }}
         </div>
     </div>

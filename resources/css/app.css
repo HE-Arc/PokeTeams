@@ -114,4 +114,25 @@
     color: #FFF;
 }
 
+.btn-actions {
+    width: 80px;
+}
 
+.type-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+
+.type-option {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.card-type {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}

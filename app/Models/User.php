@@ -37,6 +37,11 @@ class User extends Authenticatable
         return $this->hasMany(Team::class);
     }
 
+    public function teamsNotFull()
+    {
+        return $this->hasMany(Team::class)->withCount('pokemons')->having('pokemons_count', '<', 6);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
