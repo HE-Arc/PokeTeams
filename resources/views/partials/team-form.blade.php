@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<input name="selected_pokemons" id="selectedPokemons">
+<input name="selected_pokemons" id="selectedPokemons" type="hidden">
 
 <style>
     .slot {
