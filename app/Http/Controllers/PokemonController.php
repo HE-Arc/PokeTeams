@@ -59,6 +59,21 @@ class PokemonController extends Controller
 
     public function show(Pokemon $pokemon): \Illuminate\Contracts\View\View
     {
-        return view('pokemons.show', compact('pokemon'));
+        $types = Type::all();
+        $typeColors = $types->pluck('color', 'name');
+
+        $groupedResistances = [
+            '0' => [],
+            '0.25' => [],
+            '0.5' => [],
+            '1' => [],
+            '2' => [],
+            '4' => [],
+        ];
+        foreach ($pokemon->resistances() as $type => $res) {
+            $groupedResistances[(string)$res][] = $type;
+        }
+
+        return view('pokemons.show', compact('pokemon', 'types', 'typeColors', 'groupedResistances'));
     }
 }

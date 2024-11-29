@@ -37,6 +37,5 @@ class Team extends Model
     {
         return $this->pokemons->contains($pokemon->id);
     }
-
 }
 

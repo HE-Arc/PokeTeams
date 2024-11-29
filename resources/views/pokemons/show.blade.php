@@ -16,18 +16,54 @@
                      class="mx-auto"
                      style="aspect-ratio: 1/1; object-fit: contain; height: 250px;">
             </div>
-            <hr>
             <div class="type-wrapper">
-                    <span class="card-type" style="background-color: {{ $pokemon->type1->color }};">
-                        {{ strtoupper($pokemon->type1->name) }}
-                    </span>
+                <span class="card-type" style="background-color: {{ $pokemon->type1->color }};">
+                    {{ strtoupper($pokemon->type1->name) }}
+                </span>
                 @if ($pokemon->type2)
                     <span class="card-type" style="background-color: {{ $pokemon->type2->color }};">
                         {{ strtoupper($pokemon->type2->name) }}
                     </span>
                 @endif
             </div>
+            <hr>
+            <span class="card-type">
+                    @php
+                        $groupedResistances = [
+                            '0' => [],
+                            '0.25' => [],
+                            '0.5' => [],
+                            '2' => [],
+                            '4' => [],
+                        ];
+                        foreach ($pokemon->resistances() as $type => $res) {
+                            $groupedResistances[(string)$res][] = $type;
+                        }
+                    @endphp
 
+                @foreach ($groupedResistances as $resistance => $types)
+                    @if ($resistance != '1' && !empty($types))
+                        <span style="color: black">
+                                @switch($resistance)
+                                @case('0') Immunities: @break
+                                @case('0.25') Very Resistant: @break
+                                @case('0.5') Resistant: @break
+                                @case('2') Weak: @break
+                                @case('4') Very Weak: @break
+                            @endswitch
+                            </span>
+                        @foreach ($types as $type)
+                            <span class="card-type" style="background-color: {{ $typeColors[$type] ?? '#CCCCCC' }};">
+                                {{ strtoupper($type) }}
+                            </span>
+                            &nbsp;
+                        @endforeach
+                        <br>
+                        <br>
+                    @endif
+                @endforeach
+            </span>
+            <hr>
             <div class="pt-4">
                 <table class="table table-bordered">
                     <thead class="table-light">

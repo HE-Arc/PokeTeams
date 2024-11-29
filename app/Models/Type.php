@@ -17,4 +17,14 @@ class Type extends Model
     {
         return $this->hasMany(Pokemon::class, 'type2_id');
     }
+
+    public function defenseRatios()
+    {
+        return $this->hasMany(TypeRatio::class, 'type2');
+    }
+
+    public function attackRatios()
+    {
+        return  $this->hasMany(TypeRatio::class, 'type1');
+    }
 }

@@ -39,6 +39,27 @@ class Pokemon extends Model
         return $this->belongsTo(Type::class, 'type2_id');
     }
 
+    public function resistances()
+    {
+        $ratiosType1 = $this->type1()->first()->defenseRatios()->get();
+        $ratiosType2 = $this->type2() ? $this->type2()->first() : null;
+
+        $finalRatios = [];
+
+        if ($ratiosType2 != null) {
+            $ratiosType2 = $ratiosType2->defenseRatios()->get();
+            foreach ($ratiosType1 as $index => $ratio1) {
+                $finalRatios[Type::find($ratio1->type1)->name] = $ratio1->ratio * $ratiosType2[$index]->ratio;
+            }
+        }
+        else{
+            foreach ($ratiosType1 as $ratio1) {
+                $finalRatios[Type::find($ratio1->type1)->name] = $ratio1->ratio;
+            }
+        }
+        return $finalRatios;
+    }
+
     public function teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Team::class);
