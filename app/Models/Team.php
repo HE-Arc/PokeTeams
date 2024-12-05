@@ -37,5 +37,39 @@ class Team extends Model
     {
         return $this->pokemons->contains($pokemon->id);
     }
+
+    public function categorizedResistances()
+    {
+        $globalRatios = [];
+        $pokemonCount = $this->pokemons()->count();
+
+        if ($pokemonCount == 0) {
+            return ['Globaly Weak' => [], 'Globaly Resistant' => []];
+        }
+
+        foreach ($this->pokemons as $pokemon) {
+            $pokemonResistances = $pokemon->resistances();
+
+            foreach ($pokemonResistances as $type => $ratio) {
+                if (!isset($globalRatios[$type])) {
+                    $globalRatios[$type] = 0;
+                }
+                $globalRatios[$type] += $ratio;
+            }
+        }
+
+        $categorized = ['Globaly Weak' => [], 'Globaly Resistant' => []];
+
+        foreach ($globalRatios as $type => $totalRatio) {
+            $averageRatio = $totalRatio / $pokemonCount;
+
+            if ($averageRatio > 1) {
+                $categorized['Globaly Weak'][$type] = $averageRatio;
+            } else {
+                $categorized['Globaly Resistant'][$type] = $averageRatio;
+            }
+        }
+        return $categorized;
+    }
 }
 

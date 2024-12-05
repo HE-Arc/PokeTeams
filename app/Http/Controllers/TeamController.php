@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TeamRequest;
 use App\Models\Pokemon;
 use App\Models\Team;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,7 +74,12 @@ class TeamController extends Controller
     public function show($id): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         $team = Team::findOrFail($id);
-        return view('teams.show', compact('team'));
+        $types = Type::all();
+        $typeColors = $types->pluck('color', 'name');
+
+        $groupedResistances = $team->categorizedResistances();
+
+        return view('teams.show', compact('team', 'groupedResistances', 'types', 'typeColors'));
     }
 
     public function destroy($id): \Illuminate\Http\RedirectResponse

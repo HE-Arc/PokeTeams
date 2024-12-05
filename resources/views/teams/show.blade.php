@@ -38,5 +38,25 @@
                 </div>
             @endforeach
         </div>
+        <br>
+        <br>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            @foreach ($groupedResistances as $category => $types)
+                @if (!empty($types))
+                    <div class="col card shadow-sm card-body">
+                        <h5 class="card-title text-center">
+                            {{ $category == 'Globaly Weak' ? 'Globaly Weak' : 'Globaly Resistant' }}
+                        </h5>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            @foreach ($types as $type => $resistance)
+                                <span class="card-type p-2 mx-1 mb-2 text-white rounded" style="background-color: {{ $typeColors[$type] ?? '#CCCCCC' }};">
+                                    {{ strtoupper($type) }} {{ round($resistance, 2) }}
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
     </div>
 @endsection

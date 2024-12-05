@@ -53,9 +53,7 @@
                             @endswitch
                             </span>
                         @foreach ($types as $type)
-                            <span class="card-type" style="background-color: {{ $typeColors[$type] ?? '#CCCCCC' }};">
-                                {{ strtoupper($type) }}
-                            </span>
+                            <span class="card-type" style="background-color: {{ $typeColors[$type] ?? '#CCCCCC' }};">{{ strtoupper($type) }}</span>
                             &nbsp;
                         @endforeach
                         <br>

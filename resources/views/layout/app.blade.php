@@ -74,11 +74,6 @@
 
     <footer class="bg-dark text-white text-center text-lg-start mt-5 py-4">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <h5>PokeTeams</h5>
-                </div>
-            </div>
             <div class="text-center py-3">
                 &copy; {{ date('Y') }} PokeTeams. All rights reserved.
             </div>
