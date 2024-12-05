@@ -9,6 +9,13 @@
             <i class="bi bi-plus-square-fill"></i> Add new Team
         </a>
 
+        <form method="get" action="{{ route('teams.index') }}" class="d-flex align-items-center gap-3 mt-3 mb-3">
+            <div class="form-check form-switch">
+                <input type="checkbox" class="form-check-input" role="switch" id="show-other-peoples-teams" name="show-others" onchange="this.form.submit()" @checked($show_others)>
+                <label for="show-other-peoples-teams">Show other people's teams</label>
+            </div>
+        </form>
+
         @if($teams->isEmpty())
             <p>No teams found.</p>
         @else
@@ -48,16 +55,18 @@
                                     <a href="{{ route('teams.show', $team->id) }}" class="btn btn-info btn-icon btn-actions">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
+                                    @if($team->user_id == auth()->id())
                                     <a href="{{ route('teams.edit', $queryParams) }}" class="btn btn-warning btn-icon btn-actions">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
                                     <form action="{{ route('teams.destroy', $team->id) }}" method="POST">
-                                        @csrf
+                                            @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-icon btn-actions">
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
