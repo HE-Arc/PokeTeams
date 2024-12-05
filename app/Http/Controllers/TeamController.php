@@ -11,10 +11,15 @@ use Illuminate\Support\Facades\Auth;
 
 class TeamController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
+    public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
-        $teams = Team::all();
-        return view('teams.index', compact('teams'));
+        $show_others = !empty($request->input('show-others'));
+        if ($show_others) {
+            $teams = Team::all();
+        } else {
+            $teams = Team::query()->where('user_id', Auth::id())->get();
+        }
+        return view('teams.index', compact('teams', 'show_others'));
     }
 
     public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
