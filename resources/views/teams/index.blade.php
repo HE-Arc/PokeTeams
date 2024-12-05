@@ -48,6 +48,7 @@
                                     <a href="{{ route('teams.show', $team->id) }}" class="btn btn-info btn-icon btn-actions">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
+                                    @if($team->user_id == auth()->id())
                                     <a href="{{ route('teams.edit', $queryParams) }}" class="btn btn-warning btn-icon btn-actions">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
@@ -58,6 +59,7 @@
                                             <i class="bi bi-trash-fill"></i>
                                         </button>
                                     </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>
