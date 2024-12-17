@@ -2,7 +2,11 @@
 
 @section("content")
     <div class="container mt-5">
-        <h1>Pokemon List</h1>
+        @if($team != null)
+            <h1>Select a Pokemon for {{ $team->name }}</h1>
+        @else
+            <h1>Pokemon List</h1>
+        @endif
 
         <form action="{{ route('pokemons.index') }}" method="get" class="d-flex align-items-center gap-3 mt-3 mb-3" style="flex-wrap: nowrap;">
             <div class="form-group d-flex align-items-center me-2">
@@ -37,6 +41,19 @@
                 </select>
             </div>
 
+            @foreach(range(1, 6) as $i)
+                @if(isset($_GET['pokemon_'.$i]))
+                    <input name = "{{'pokemon_'.$i}}" value="{{ $_GET['pokemon_'.$i]}}" type="hidden">
+                @endif
+            @endforeach
+
+            @if($team != null)
+                <input name="team" value="{{ $team->id }}" type="hidden">
+            @elseif(isset($_GET['new_team']))
+                <input name="new_team" value="0" type="hidden">
+            @endif
+
+
             <div>
                 <button class="btn btn-primary">Apply</button>
             </div>
@@ -69,9 +86,29 @@
                                 <a href="{{ route('pokemons.show', $pokemon) }}" class="btn btn-info btn-actions">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
-                                <a href="{{ route('teams.add-pokemon', $pokemon) }}" class="btn btn-success btn-actions">
-                                    <i class="bi bi-plus-square-fill"></i>
-                                </a>
+                                @if($team != null or isset($_GET['new_team']))
+                                    @php
+                                        if($team != null){
+                                            $queryParams = ['team' => $team->id];
+                                        }
+                                        $index = 0;
+                                        for ($i = 1; $i <= 6; $i++) {
+                                            if(isset($_GET['pokemon_'.$i])) {
+                                                $queryParams['pokemon_'.$i] = $_GET['pokemon_'.$i];
+                                            } else if ($index == 0) {
+                                                $index = $i;
+                                            }
+                                        }
+                                        $queryParams["pokemon_".$index] = $pokemon->id;
+                                    @endphp
+                                    @if(!isset($_GET['new_team']))
+                                        <a href="{{ route('teams.edit', $queryParams) }}" class="btn btn-success btn-actions">
+                                            @else
+                                            <a href="{{ route('teams.create', $queryParams) }}" class="btn btn-success btn-actions">
+                                    @endif
+                                        <i class="bi bi-plus-square-fill"></i>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>

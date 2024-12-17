@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Team;
 use Illuminate\Http\Request;
 use App\Models\Pokemon;
 use App\Models\Type;
@@ -11,7 +12,6 @@ class PokemonController extends Controller
     public function index(Request $request): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
     {
         $query = Pokemon::query();
-
         if (isset($request->name) && !empty($request->name)) {
             $query->where('name', 'LIKE', '%' . $request->name . '%');
         }
@@ -51,10 +51,15 @@ class PokemonController extends Controller
                 }
             }
         }
+        $team = null;
+        if (!empty($request->team)) {
+            $team = Team::getTeamById($request->team);
+        }
+        //dd($team);
 
         $pokemons = $query->paginate(20);
         $types = Type::all();
-        return view('pokemons.index', compact('pokemons', 'types'));
+        return view('pokemons.index', compact('pokemons', 'types', 'team'));
     }
 
     public function show(Pokemon $pokemon): \Illuminate\Contracts\View\View

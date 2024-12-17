@@ -22,5 +22,3 @@ Route::post('/register', [AuthController::class, 'doRegister']);
 Route::resource('pokemons', PokemonController::class);
 
 Route::resource('teams', TeamController::class)->middleware('auth');
-Route::get('/teams/add-pokemon/{pokemonToAdd}/', [TeamController::class, 'addPokemonForm'])->name('teams.add-pokemon')->middleware('auth');
-Route::post('/teams/add-pokemon/{pokemon}/{team}', [TeamController::class, 'addPokemon'])->name('teams.add-pokemon-to')->middleware('auth');

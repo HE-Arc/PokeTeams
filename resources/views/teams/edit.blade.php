@@ -16,6 +16,7 @@
             <label for="teamName">Team Name</label>
             <input type="text" name="name" id="teamName" class="form-control" value="{{ old('name', $team->name) }}">
         </div>
+
         @include("partials.team-form")
         @include("partials.errors-form")
 
@@ -24,5 +25,4 @@
     </form>
 </div>
 
-@include("partials.pokemon-modal")
 @endsection

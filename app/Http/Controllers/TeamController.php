@@ -37,8 +37,7 @@ class TeamController extends Controller
         $team->save();
 
         $selectedPokemons = $this->createSelectedPokemonsArray($request);
-
-        $team->pokemons()->attach($selectedPokemons);
+        $team->pokemons()->sync($selectedPokemons);
 
         return redirect()->route('teams.index')
             ->with('success', 'Team created successfully.');
@@ -100,37 +99,6 @@ class TeamController extends Controller
 
         return redirect()->route('teams.index')
             ->with('success', 'Team deleted successfully.');
-    }
-
-    public function addPokemon(Pokemon $pokemon, Team $team)
-    {
-        if ($this->isNotTheCurrentUser($team->user_id)) {
-            return redirect()->back()
-                ->with('error', 'You do not have permission to update this team.');
-        }
-
-        if ($team->isTeamFull()) {
-            return redirect()->back()
-                ->with('error', 'The team already has 6 Pokémon.');
-        }
-
-        if ($team->isPokemonInTheTeam($pokemon)) {
-            return redirect()->back()
-                ->with('error', 'This Pokémon is already in the team.');
-        }
-
-        $team->addPokemon($pokemon);
-
-        return redirect()->back()
-            ->with('success', 'Pokémon added to the team successfully!');
-    }
-
-
-
-    public function addPokemonForm(Pokemon $pokemonToAdd): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Foundation\Application
-    {
-        $teamsOfUser = auth()->user()->teamsNotFull;
-        return view('teams.add-pokemon', compact('teamsOfUser', 'pokemonToAdd'));
     }
 
     private function createSelectedPokemonsArray(TeamRequest $request): array

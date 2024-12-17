@@ -18,9 +18,10 @@
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="password" name="password">
                 </div>
+                New to PokeTeams? <a href="{{ route('register') }}">Create an account</a>
+                <br>
 
                 @include("partials.errors-form")
-
                 <button class="btn btn-primary mt-2">Sign in</button>
             </form>
         </div>

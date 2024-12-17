@@ -21,5 +21,4 @@
     </form>
 </div>
 
-@include("partials.pokemon-modal")
 @endsection

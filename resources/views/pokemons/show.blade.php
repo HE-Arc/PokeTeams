@@ -27,7 +27,14 @@
                 @endif
             </div>
             <hr>
-            <span class="card-type">
+            <div class="pt-4">
+                <table class="table table-bordered">
+                    <thead  class="table-light">
+                        <tr>
+                            <th>Weaknesses & resistances</th>
+                            <th>Types</th>
+                        </tr>
+                    </thead>
                     @php
                         $groupedResistances = [
                             '0' => [],
@@ -42,26 +49,28 @@
                     @endphp
 
                 @foreach ($groupedResistances as $resistance => $types)
+
                     @if ($resistance != '1' && !empty($types))
-                        <span style="color: black">
+                            <tr>
+                                <td>
                                 @switch($resistance)
-                                @case('0') Immunities: @break
-                                @case('0.25') Very Resistant: @break
-                                @case('0.5') Resistant: @break
-                                @case('2') Weak: @break
-                                @case('4') Very Weak: @break
+                                @case('0') Immunities @break
+                                @case('0.25') Very Resistant @break
+                                @case('0.5') Resistant @break
+                                @case('2') Weak @break
+                                @case('4') Very Weak @break
                             @endswitch
-                            </span>
+                                </td>
+                                <td>
                         @foreach ($types as $type)
                             <span class="card-type" style="background-color: {{ $typeColors[$type] ?? '#CCCCCC' }};">{{ strtoupper($type) }}</span>
-                            &nbsp;
                         @endforeach
-                        <br>
-                        <br>
+                                </td>
                     @endif
+                    </tr>
                 @endforeach
-            </span>
-            <hr>
+                </table>
+            </div>
             <div class="pt-4">
                 <table class="table table-bordered">
                     <thead class="table-light">

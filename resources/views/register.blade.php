@@ -28,9 +28,10 @@
                     <label for="password_confirmation">Confirm Password</label>
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
                 </div>
+                Already have an account? <a href="{{ route('login') }}">Sign in</a>
+                <br>
 
                 @include("partials.errors-form")
-
                 <button class="btn btn-primary mt-2">Register</button>
             </form>
         </div>

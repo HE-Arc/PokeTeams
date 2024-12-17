@@ -71,5 +71,10 @@ class Team extends Model
         }
         return $categorized;
     }
+
+    public static function getTeamById($id)
+    {
+        return self::find($id);
+    }
 }
 
